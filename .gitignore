@@ -40,4 +40,5 @@ build/
 *.class
 ###
 cutl.txt
-
+###
+000 Project/**git
