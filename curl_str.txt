@@ -1,2 +1,0 @@
-curl -X PUT -i -H "Content-Type:application/json" -d "{\"id\":313695e0-72a5-4aab-9047-fbec516dab4f,\"title\":\"новая заметка\"}" http://localhost:8080/test_war_exploded/notes/313695e0-72a5-4aab-9047-fbec516dab4f/update
-
