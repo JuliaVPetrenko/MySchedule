@@ -27,11 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                hasAuthority("USER1")
 //                 .antMatchers("/Liz/**").hasAuthority("USER1")
 //                .antMatchers("/Nick/**").hasAuthority("USER2")
-//                .antMatchers("/Anny/**").hasAuthority("USER3")
+//                .antMatchers("/Anny/**").hasAuthority("USER3")пше икфтср
                 .and()
                 .formLogin()
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout().logoutSuccessUrl("/")
+                .and()
+                .csrf().disable();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){

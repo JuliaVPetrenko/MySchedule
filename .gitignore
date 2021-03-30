@@ -41,4 +41,5 @@ build/
 ###
 cutl.txt
 ###
-000 Project/**git
+000 Project/*
+*git

@@ -33,6 +33,13 @@ public class User {
   return tasks;
  }
 
+ public User() {
+ }
+
+ public User(String username) {
+  this.username = username;
+ }
+
  public void setTasks(Collection<Task> tasks) {
   this.tasks = tasks;
  }

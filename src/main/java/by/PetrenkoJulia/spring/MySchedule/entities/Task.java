@@ -17,13 +17,21 @@ public class Task {
     private String name;
     private Integer priority = 1;
     private Date date_create;
+    private Date date_start;
 
-    @ManyToMany
-    @JoinTable(name = "users_tasks",
-            joinColumns = @JoinColumn(name = "task_id"))
-//            , inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    @ManyToMany
+//    @JoinTable(name = "users_tasks",
+//            joinColumns = @JoinColumn(name = "task_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
 //    private Collection<User> users;
-            private int user_id;
+//
+//    public Collection<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Collection<User> users) {
+//        this.users = users;
+//    }
 
     protected Task() {
     }
@@ -31,6 +39,7 @@ public class Task {
     public Task(String name) {
         this.name = name;
         this.date_create = new Date();
+//        this.users = users;
     }
 
     public String getName() {
@@ -52,6 +61,11 @@ public class Task {
     public Date getDate_create() {
         return date_create;
     }
+
+    public Date getDate_start() {
+        return date_start;
+    }
+
 
 //    public void setDate_create(Date date_create) {
 //        this.date_create = date_create;
