@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                hasAuthority("USER1")
 //                 .antMatchers("/Liz/**").hasAuthority("USER1")
 //                .antMatchers("/Nick/**").hasAuthority("USER2")
-//                .antMatchers("/Anny/**").hasAuthority("USER3")пше икфтср
+//                .antMatchers("/Anny/**").hasAuthority("USER3")
                 .and()
                 .formLogin()
                 .and()
