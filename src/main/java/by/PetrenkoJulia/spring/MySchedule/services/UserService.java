@@ -55,13 +55,13 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-//    public String TasksByUser(String username){
-    public Collection<Task> TasksByUser(String username){
-        User user = findByUsername(username);
-        Collection<Task> tasks = user.getTasks();
-//            return tasks.stream().map(task -> task.getName()).reduce((t, s) -> s + "<br>" + t).get();
-        return tasks;
-    }
+////    public String TasksByUser(String username){
+//    public Collection<Task> TasksByUser(String username){
+//        User user = findByUsername(username);
+//        Collection<Task> tasks = user.getTasks();
+////            return tasks.stream().map(task -> task.getName()).reduce((t, s) -> s + "<br>" + t).get();
+//        return tasks;
+//    }
 
     public Iterable<User> ShowAllUsers (){
         return userRepository.findAll();

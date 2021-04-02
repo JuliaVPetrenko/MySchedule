@@ -28,4 +28,20 @@ public class TaskService {
     public void saveTask(Task task){
         taskRepository.save(task);
     }
+
+    public Task getById(Long id) {
+        return taskRepository.findById(id).orElse(null);
+    }
+
+    public Task updateTask (Long id, Task newTask){
+        Task taskToUpdate = getById(id);
+        taskToUpdate.setName(newTask.getName());
+        taskToUpdate.setPriority(newTask.getPriority());
+        taskToUpdate.setDate_create(newTask.getDate_create());
+        taskToUpdate.setDate_start(newTask.getDate_start());
+        taskToUpdate.setUsers(newTask.getUsers());
+
+        return taskRepository.save(taskToUpdate);
+    }
+
 }

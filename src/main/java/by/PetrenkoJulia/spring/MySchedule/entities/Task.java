@@ -13,17 +13,16 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private Integer priority = 1;
     private Date date_create;
     private Date date_start;
 
-//    @ManyToMany
-//    @JoinTable(name = "users_tasks",
-//            joinColumns = @JoinColumn(name = "task_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    private Collection<User> users;
+    @ManyToMany
+    @JoinTable(name = "users_tasks",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Collection<User> users;
 //
 //    public Collection<User> getUsers() {
 //        return users;
@@ -58,6 +57,10 @@ public class Task {
         this.priority = priority;
     }
 
+    public void setDate_create(Date date_create) {
+        this.date_create = date_create;
+    }
+
     public Date getDate_create() {
         return date_create;
     }
@@ -66,8 +69,18 @@ public class Task {
         return date_start;
     }
 
+    public void setDate_start(Date date_start) {
+        this.date_start = date_start;
+    }
 
-//    public void setDate_create(Date date_create) {
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
+    //    public void setDate_create(Date date_create) {
 //        this.date_create = date_create;
 //    }
 

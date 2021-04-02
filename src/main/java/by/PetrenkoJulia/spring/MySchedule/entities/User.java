@@ -23,15 +23,15 @@ public class User {
          inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
- @ManyToMany
- @JoinTable(name = "users_tasks",
-         joinColumns = @JoinColumn(name = "user_id"),
-         inverseJoinColumns = @JoinColumn(name = "task_id"))
- private Collection<Task> tasks;
-
- public Collection<Task> getTasks() {
-  return tasks;
- }
+// @ManyToMany
+// @JoinTable(name = "users_tasks",
+//         joinColumns = @JoinColumn(name = "user_id"),
+//         inverseJoinColumns = @JoinColumn(name = "task_id"))
+// private Collection<Task> tasks;
+//
+// public Collection<Task> getTasks() {
+//  return tasks;
+// }
 
  public User() {
  }
@@ -40,9 +40,9 @@ public class User {
   this.username = username;
  }
 
- public void setTasks(Collection<Task> tasks) {
-  this.tasks = tasks;
- }
+// public void setTasks(Collection<Task> tasks) {
+//  this.tasks = tasks;
+// }
 
  public Integer getId() {
   return id;

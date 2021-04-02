@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.security.Principal;
 import java.util.*;
 
@@ -36,9 +37,12 @@ public class Controller {
     }
 
     @GetMapping("/all_tasks")
-    public List<Task> ShowAllTasks() {
+    public ResponseEntity<List<Task>> ShowAllTasks() {
         List<Task> tasks = taskService.TasksShow();
-        return tasks;
+        if (tasks.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(tasks);
     }
 
 //    public String ShowAllTasks(){
@@ -47,24 +51,33 @@ public class Controller {
 //        return listTask.stream().map(task -> task.getName()).reduce((t, s) -> t + "<br>" + s).get();
 //    }
 
-    @GetMapping("/tasks")
-    public Collection<Task> ShowTasks(Principal principal){
+//    @GetMapping("/tasks")
 //    public Collection<Task> ShowTasks(Principal principal){
-        return userService.TasksByUser(principal.getName());
-    }
-
-//    public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid Customer customer){
-//        HttpHeaders headers = new HttpHeaders();
-//
-//        if(customer == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        this.customerService.save(customer);
-//        return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
+////    public Collection<Task> ShowTasks(Principal principal){
+//        return userService.TasksByUser(principal.getName());
 //    }
 
-//    @PostMapping("/add_task")
-    @RequestMapping(value ="/add_task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/task/{id}")
+    public ResponseEntity<Task> ShowTasksById(@PathVariable("id") Long id){
+//    public Collection<Task> ShowTasks(Principal principal){
+        Task task = taskService.getById(id);
+        if (task == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(task);
+    }
+
+    @PutMapping("/task/{id}")
+    public ResponseEntity<Task> EditTasksById(@PathVariable("id") Long id, @RequestBody Task newTask){
+        if (taskService.getById(id) == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        Task task = taskService.updateTask(id, newTask);
+        return ResponseEntity.ok(task);
+    }
+
+    @PostMapping("/add_task")
+//    @RequestMapping(value ="/add_task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> AddTask(@RequestBody Task task){
         HttpHeaders headers = new HttpHeaders();
         if(task == null){
