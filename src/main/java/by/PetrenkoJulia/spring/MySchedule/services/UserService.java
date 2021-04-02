@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService{
     private UserRepository userRepository;
 
     @Autowired
@@ -30,23 +30,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-//    public List<Task> FindTaskForUser(String username){
-//        User
-//        List<Task> tasks = user
-//    }
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         User user = findByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException(String.format("User %s not found", username));
         }
-        String s1 = user.getUsername();
-        System.out.println(s1);
-        String s2 = user.getPassword();
-        System.out.println(s2);
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),
                 mapRolesToAuthorities(user.getRoles()));
     }
@@ -55,20 +45,31 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-////    public String TasksByUser(String username){
-//    public Collection<Task> TasksByUser(String username){
+//    public String TasksByUser(String username){
 //        User user = findByUsername(username);
-//        Collection<Task> tasks = user.getTasks();
-////            return tasks.stream().map(task -> task.getName()).reduce((t, s) -> s + "<br>" + t).get();
-//        return tasks;
+//        Collection<User> tasks = user.getTasks();
+//            return tasks.stream().map(task -> task.getName()).reduce((t, s) -> s + "<br>" + t).get();
 //    }
 
     public Iterable<User> ShowAllUsers (){
         return userRepository.findAll();
     }
 
+    public User getUserById (Long id) {
+
+        return userRepository.findById(id).orElse(null);
+    }
     public User saveUser(User user){
         return userRepository.save(user);
+    }
+
+    public User updateUser(Long id, User newUser){
+        User userForUpdate = getUserById(id);
+        userForUpdate.setUsername(newUser.getUsername());
+        userForUpdate.setPassword(newUser.getPassword());
+        userForUpdate.setRoles(newUser.getRoles());
+        saveUser(userForUpdate);
+        return userForUpdate;
     }
 
 }

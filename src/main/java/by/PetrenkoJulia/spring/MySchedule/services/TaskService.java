@@ -1,14 +1,10 @@
 package by.PetrenkoJulia.spring.MySchedule.services;
 
 import by.PetrenkoJulia.spring.MySchedule.entities.Task;
-import by.PetrenkoJulia.spring.MySchedule.entities.User;
 import by.PetrenkoJulia.spring.MySchedule.repository.TaskRepository;
-import by.PetrenkoJulia.spring.MySchedule.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +12,12 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
-    public TaskService(TaskRepository taskRepository) {
+    @Autowired
+    public TaskService(TaskRepository taskRepository, UserService userService) {
         this.taskRepository = taskRepository;
+        this.userService = userService;
     }
 
     public List<Task> TasksShow(){
@@ -31,6 +30,11 @@ public class TaskService {
 
     public Task getById(Long id) {
         return taskRepository.findById(id).orElse(null);
+    }
+
+    public Collection<Task> TasksByUserName(String userName){
+        Collection<Task> tasks = taskRepository.findByUsersIsContaining(userService.findByUsername(userName));
+        return tasks;
     }
 
     public Task updateTask (Long id, Task newTask){

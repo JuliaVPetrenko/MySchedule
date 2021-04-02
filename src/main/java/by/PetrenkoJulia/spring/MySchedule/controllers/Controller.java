@@ -51,11 +51,10 @@ public class Controller {
 //        return listTask.stream().map(task -> task.getName()).reduce((t, s) -> t + "<br>" + s).get();
 //    }
 
-//    @GetMapping("/tasks")
-//    public Collection<Task> ShowTasks(Principal principal){
-////    public Collection<Task> ShowTasks(Principal principal){
-//        return userService.TasksByUser(principal.getName());
-//    }
+    @GetMapping("/tasks")
+    public Collection<Task> ShowTasks(Principal principal){
+        return taskService.TasksByUserName(principal.getName());
+    }
 
     @GetMapping("/task/{id}")
     public ResponseEntity<Task> ShowTasksById(@PathVariable("id") Long id){
@@ -64,6 +63,16 @@ public class Controller {
         if (task == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+        return ResponseEntity.ok(task);
+    }
+
+    @PostMapping("/add_task")
+//    @RequestMapping(value ="/add_task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> AddTask(@RequestBody Task task){
+        if(task == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        taskService.saveTask(task);
         return ResponseEntity.ok(task);
     }
 
@@ -76,20 +85,22 @@ public class Controller {
         return ResponseEntity.ok(task);
     }
 
-    @PostMapping("/add_task")
-//    @RequestMapping(value ="/add_task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Task> AddTask(@RequestBody Task task){
-        HttpHeaders headers = new HttpHeaders();
-        if(task == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping("/add_user")
+    public ResponseEntity<User> AddUser(@RequestBody @Valid User newUser){
+        if(newUser == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        taskService.saveTask(task);
-        return new ResponseEntity<>(task, headers, HttpStatus.CREATED);
+        User user = userService.saveUser(newUser);
+        return ResponseEntity.ok(user);
+    }
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> EditUserById(@PathVariable("id") Long id, @RequestBody User newUser){
+        if (userService.getUserById(id) == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        User user = userService.updateUser(id, newUser);
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/add_user")
-    public User AddUser(@RequestBody @Valid User user){
-        return userService.saveUser(user);
-    }
 
 }
