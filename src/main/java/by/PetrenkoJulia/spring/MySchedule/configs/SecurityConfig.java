@@ -23,18 +23,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/tasks/**").hasAnyAuthority("USER1", "USER2", "USER3")
+                .antMatchers("/tasks/**").hasAnyAuthority("USER1", "USER2", "USER3", "USER5")
 //                hasAuthority("USER1")
 //                 .antMatchers("/Liz/**").hasAuthority("USER1")
 //                .antMatchers("/Nick/**").hasAuthority("USER2")
 //                .antMatchers("/Anny/**").hasAuthority("USER3")
                 .and()
-                .formLogin()
+                .formLogin() /* !!!! но, если логинимся через postman нужно добавить formLogin().disable():*/
+//                .formLogin().disable()
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .httpBasic()/* сообщает Spring, чтобы он ожидал базовую HTTP аутентификацию */
+                .and().sessionManagement().disable() /* сообщает Spring, что не следует хранить информацию о сеансе для пользователей, поскольку это не нужно для API */
+                ;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

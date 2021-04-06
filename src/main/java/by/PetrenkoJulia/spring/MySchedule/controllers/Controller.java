@@ -38,7 +38,7 @@ public class Controller {
 
     @GetMapping("/all_tasks")
     public ResponseEntity<List<Task>> ShowAllTasks() {
-        List<Task> tasks = taskService.TasksShow();
+        List<Task> tasks = taskService.tasksShow();
         if (tasks.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -102,5 +102,14 @@ public class Controller {
         return ResponseEntity.ok(user);
     }
 
+    //    @PatchMapping("edit_task/{id}")
+//    public ResponseEntity<Task> PatchTaskById(@PathVariable("id") Long id, @RequestBody Task newTask){
+//        if (userService.getUserById(id) == null){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//
+//
+//        return ResponseEntity.ok(null);
+//    }
 
 }

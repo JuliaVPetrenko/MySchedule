@@ -20,7 +20,7 @@ public class TaskService {
         this.userService = userService;
     }
 
-    public List<Task> TasksShow(){
+    public List<Task> tasksShow(){
         return taskRepository.findAll();
     }
 
@@ -46,6 +46,10 @@ public class TaskService {
         taskToUpdate.setUsers(newTask.getUsers());
 
         return taskRepository.save(taskToUpdate);
+    }
+
+    public Task patchTask(Long id, Task task){
+        return null;
     }
 
 }
