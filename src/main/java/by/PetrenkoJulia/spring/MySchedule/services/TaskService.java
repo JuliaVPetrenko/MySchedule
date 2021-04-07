@@ -28,17 +28,17 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public Task getById(Long id) {
+    public Task getTaskById(Long id) {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public Collection<Task> TasksByUserName(String userName){
+    public Collection<Task> tasksByUserName(String userName){
         Collection<Task> tasks = taskRepository.findByUsersIsContaining(userService.findByUsername(userName));
         return tasks;
     }
 
     public Task updateTask (Long id, Task newTask){
-        Task taskToUpdate = getById(id);
+        Task taskToUpdate = getTaskById(id);
         taskToUpdate.setName(newTask.getName());
         taskToUpdate.setPriority(newTask.getPriority());
         taskToUpdate.setDate_create(newTask.getDate_create());
@@ -48,8 +48,33 @@ public class TaskService {
         return taskRepository.save(taskToUpdate);
     }
 
-    public Task patchTask(Long id, Task task){
-        return null;
+    public Task patchTask(Long id, Task newTask){
+        Task taskToUpdate = getTaskById(id);
+
+        if (newTask.getName() != null && !newTask.getName().trim().isEmpty()) {
+            taskToUpdate.setName(newTask.getName());
+        }
+        if (newTask.getPriority() != null && newTask.getPriority()>0) {
+            taskToUpdate.setPriority(newTask.getPriority());
+        }
+        if (newTask.getDate_create() != null) {
+            taskToUpdate.setDate_create(newTask.getDate_create());
+        }
+        if (newTask.getDate_start() != null) {
+            taskToUpdate.setDate_start(newTask.getDate_start());
+        }
+        if (newTask.getUsers() != null) {
+            taskToUpdate.setUsers(newTask.getUsers());
+        }
+
+        return taskRepository.save(taskToUpdate);
+    }
+
+    private boolean isBlank(String str){
+        if (str != null && !str.trim().isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
 }

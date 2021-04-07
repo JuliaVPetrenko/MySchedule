@@ -32,12 +32,12 @@ public class Controller {
     }
 
     @GetMapping("/")
-    public Iterable<User> ScheduleForAll(){
+    public Iterable<User> scheduleForAll(){
         return userService.ShowAllUsers();
     }
 
     @GetMapping("/all_tasks")
-    public ResponseEntity<List<Task>> ShowAllTasks() {
+    public ResponseEntity<List<Task>> showAllTasks() {
         List<Task> tasks = taskService.tasksShow();
         if (tasks.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -52,14 +52,14 @@ public class Controller {
 //    }
 
     @GetMapping("/tasks")
-    public Collection<Task> ShowTasks(Principal principal){
-        return taskService.TasksByUserName(principal.getName());
+    public Collection<Task> showTasks(Principal principal){
+        return taskService.tasksByUserName(principal.getName());
     }
 
     @GetMapping("/task/{id}")
-    public ResponseEntity<Task> ShowTasksById(@PathVariable("id") Long id){
+    public ResponseEntity<Task> showTasksById(@PathVariable("id") Long id){
 //    public Collection<Task> ShowTasks(Principal principal){
-        Task task = taskService.getById(id);
+        Task task = taskService.getTaskById(id);
         if (task == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -68,7 +68,7 @@ public class Controller {
 
     @PostMapping("/add_task")
 //    @RequestMapping(value ="/add_task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Task> AddTask(@RequestBody Task task){
+    public ResponseEntity<Task> addTask(@RequestBody Task task){
         if(task == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -77,8 +77,8 @@ public class Controller {
     }
 
     @PutMapping("/task/{id}")
-    public ResponseEntity<Task> EditTasksById(@PathVariable("id") Long id, @RequestBody Task newTask){
-        if (taskService.getById(id) == null){
+    public ResponseEntity<Task> editTasksById(@PathVariable("id") Long id, @RequestBody Task newTask){
+        if (taskService.getTaskById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         Task task = taskService.updateTask(id, newTask);
@@ -86,7 +86,7 @@ public class Controller {
     }
 
     @PostMapping("/add_user")
-    public ResponseEntity<User> AddUser(@RequestBody @Valid User newUser){
+    public ResponseEntity<User> addUser(@RequestBody @Valid User newUser){
         if(newUser == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -94,7 +94,7 @@ public class Controller {
         return ResponseEntity.ok(user);
     }
     @PutMapping("/user/{id}")
-    public ResponseEntity<User> EditUserById(@PathVariable("id") Long id, @RequestBody User newUser){
+    public ResponseEntity<User> editUserById(@PathVariable("id") Long id, @RequestBody User newUser){
         if (userService.getUserById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -102,14 +102,13 @@ public class Controller {
         return ResponseEntity.ok(user);
     }
 
-    //    @PatchMapping("edit_task/{id}")
-//    public ResponseEntity<Task> PatchTaskById(@PathVariable("id") Long id, @RequestBody Task newTask){
-//        if (userService.getUserById(id) == null){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//
-//
-//        return ResponseEntity.ok(null);
-//    }
+    @PatchMapping("task/{id}")
+    public ResponseEntity<Task> patchTaskById(@PathVariable("id") Long id, @RequestBody Task newTask){
+        if (taskService.getTaskById(id) == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        Task task = taskService.patchTask(id, newTask);
+        return ResponseEntity.ok(task);
+    }
 
 }
