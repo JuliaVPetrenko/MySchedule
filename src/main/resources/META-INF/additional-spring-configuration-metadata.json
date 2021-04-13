@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.liquibase.change-log.classpath",
+      "type": "java.lang.String",
+      "description": "Description for spring.liquibase.change-log.classpath."
+    },
+    {
+      "name": "spring.liquibase.change-log.classpath",
+      "type": "java.lang.String",
+      "description": "Description for spring.liquibase.change-log.classpath."
+    }
+  ] }

@@ -39,7 +39,7 @@ public class TaskService {
 
     public Task updateTask (Long id, Task newTask){
         Task taskToUpdate = getTaskById(id);
-        taskToUpdate.setName(newTask.getName());
+        taskToUpdate.setTaskname(newTask.getTaskname());
         taskToUpdate.setPriority(newTask.getPriority());
         taskToUpdate.setDate_create(newTask.getDate_create());
         taskToUpdate.setDate_start(newTask.getDate_start());
@@ -51,8 +51,8 @@ public class TaskService {
     public Task patchTask(Long id, Task newTask){
         Task taskToUpdate = getTaskById(id);
 
-        if (newTask.getName() != null && !newTask.getName().trim().isEmpty()) {
-            taskToUpdate.setName(newTask.getName());
+        if (newTask.getTaskname() != null && !newTask.getTaskname().trim().isEmpty()) {
+            taskToUpdate.setTaskname(newTask.getTaskname());
         }
         if (newTask.getPriority() != null && newTask.getPriority()>0) {
             taskToUpdate.setPriority(newTask.getPriority());

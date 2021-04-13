@@ -85,6 +85,15 @@ public class Controller {
         return ResponseEntity.ok(task);
     }
 
+    @PatchMapping("task/{id}")
+    public ResponseEntity<Task> patchTaskById(@PathVariable("id") Long id, @RequestBody Task newTask){
+        if (taskService.getTaskById(id) == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        Task task = taskService.patchTask(id, newTask);
+        return ResponseEntity.ok(task);
+    }
+
     @PostMapping("/add_user")
     public ResponseEntity<User> addUser(@RequestBody @Valid User newUser){
         if(newUser == null){
@@ -100,15 +109,6 @@ public class Controller {
         }
         User user = userService.updateUser(id, newUser);
         return ResponseEntity.ok(user);
-    }
-
-    @PatchMapping("task/{id}")
-    public ResponseEntity<Task> patchTaskById(@PathVariable("id") Long id, @RequestBody Task newTask){
-        if (taskService.getTaskById(id) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        Task task = taskService.patchTask(id, newTask);
-        return ResponseEntity.ok(task);
     }
 
 }

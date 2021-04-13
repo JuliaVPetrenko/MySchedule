@@ -1,18 +1,17 @@
 package by.PetrenkoJulia.spring.MySchedule.entities;
 
-import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table (name = "roles")
+@Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
+    @Column(unique = true, nullable = false)
+    private String rolename;
 }

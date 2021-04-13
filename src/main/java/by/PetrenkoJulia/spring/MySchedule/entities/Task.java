@@ -13,7 +13,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @Column(unique = true, nullable = false)
+    private String taskname;
+
     private Integer priority = 1;
     private Date date_create;
     private Date date_start;
