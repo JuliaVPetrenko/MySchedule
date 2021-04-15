@@ -3,8 +3,8 @@ package by.PetrenkoJulia.spring.MySchedule.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Data
@@ -18,8 +18,8 @@ public class Task {
     private String taskname;
 
     private Integer priority = 1;
-    private Date date_create;
-    private Date date_start;
+    private LocalDateTime date_create = LocalDateTime.now();
+    private LocalDateTime date_start;
 
     @ManyToMany
     @JoinTable(name = "users_tasks",
